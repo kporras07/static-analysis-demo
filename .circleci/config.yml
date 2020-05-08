@@ -5,8 +5,8 @@ jobs:
       - image: php:7.4-cli
     environment:
       NVM_DIR: /usr/local/nvm
-      NODE_VERSION: 14
-      NODE_PATH: $NVM_DIR/v$NODE_VERSION/lib/node_modules
+      NODE_VERSION: 14.2.0
+      NODE_PATH: $NVM_DIR/v$NODE_VERSION/bin
     working_directory: /var/www/html
     steps:
       - run: apt update -y && apt install -y unzip git
@@ -35,8 +35,7 @@ jobs:
           name: Install Dependencies
           command: |
             composer install --ignore-platform-reqs
-            nvm use default
-            cd web/core && npm install 
+            cd web/core && $NODE_PATH/npm install
       - save_cache:
           key: composer-cache-{{ checksum "composer.lock" }}
           paths:
