@@ -31,7 +31,7 @@ jobs:
             nvm use default
       - restore_cache:
           keys:
-            - npm-cache-{{ checksum "web/core/package.json" }}
+            #- npm-cache-{{ checksum "web/core/package.json" }}
             - composer-cache-{{ checksum "composer.lock" }}
       - run:
           name: Install Dependencies
