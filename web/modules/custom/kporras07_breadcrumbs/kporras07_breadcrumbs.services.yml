@@ -1,0 +1,6 @@
+services:
+  kporras07.breadcrumbs:
+    class: Drupal\kporras07_breadcrumbs\BreadcrumbsBuilder
+    arguments: ['@current_user', '@access_manager', '@path.matcher']
+    tags:
+      - { name: breadcrumb_builder, priority: 100 }

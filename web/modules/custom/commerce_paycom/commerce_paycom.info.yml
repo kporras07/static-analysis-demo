@@ -1,0 +1,7 @@
+name: Commerce Paycom
+type: module
+description: 'Provides paycom payment gateway.'
+package: Commerce
+core: 8.x
+dependencies:
+  - commerce:commerce_payment

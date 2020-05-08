@@ -1,0 +1,11 @@
+name: Commerce Wire
+type: module
+description: Wire Transfers support for commerce.
+core: 8.x
+package: Commerce
+dependencies:
+  - field
+  - image
+  - commerce
+  - commerce:commerce_order
+  - commerce:commerce_payment

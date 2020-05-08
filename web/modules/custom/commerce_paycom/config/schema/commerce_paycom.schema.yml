@@ -1,0 +1,18 @@
+commerce_payment.commerce_payment_gateway.plugin.paycom_offsite:
+  type: commerce_payment_gateway_configuration
+  mapping:
+    username:
+      type: string
+      label: 'Username'
+    key:
+      type: string
+      label: 'Key'
+    key_id:
+      type: string
+      label: 'Key ID'
+    processor_id:
+      type: string
+      label: 'Processor ID'
+    currency:
+      type: string
+      label: 'Currency'

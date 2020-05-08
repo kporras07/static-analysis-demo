@@ -1,0 +1,15 @@
+commerce_payment.commerce_payment_gateway.plugin.cardinal_offsite:
+  type: commerce_payment_gateway_configuration
+  mapping:
+    key:
+      type: string
+      label: 'Key'
+    key_id:
+      type: string
+      label: 'Key ID'
+    processor_id:
+      type: string
+      label: 'Processor ID'
+    username:
+      type: string
+      label: 'Username'
