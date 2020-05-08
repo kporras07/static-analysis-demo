@@ -3,10 +3,6 @@ jobs:
   build-and-test:
     docker:
       - image: php:7.4-cli
-    environment:
-      NVM_DIR: /usr/local/nvm
-      NODE_VERSION: 14.2.0
-      NODE_PATH: $NVM_DIR/v$NODE_VERSION/bin
     working_directory: /var/www/html
     steps:
       - run: apt update -y && apt install -y unzip git
@@ -23,11 +19,8 @@ jobs:
       - run:
           name: Install Node.
           command: |
-            curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
-            source $NVM_DIR/nvm.sh && \
-            nvm install $NODE_VERSION && \
-            nvm alias default $NODE_VERSION && \
-            nvm use default
+            curl -sL https://deb.nodesource.com/setup_14.x | bash -
+            apt install -y nodejs
       - restore_cache:
           keys:
             - composer-cache-{{ checksum "composer.lock" }}
@@ -35,7 +28,7 @@ jobs:
           name: Install Dependencies
           command: |
             composer install --ignore-platform-reqs
-            cd web/core && $NODE_PATH/npm install
+            cd web/core && npm install
       - save_cache:
           key: composer-cache-{{ checksum "composer.lock" }}
           paths:
