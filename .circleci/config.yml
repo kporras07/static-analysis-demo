@@ -8,52 +8,52 @@ jobs:
       NODE_VERSION: 14
     working_directory: /var/www/html
     steps:
-      - run: apt update -y && apt install -y unzip
+      - run: apt update -y && apt install -y unzip git
       - checkout
       - run:
-          name: Install Composer
-          command: |
-            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-            php -r "copy('https://composer.github.io/installer.sig', 'composer-setup.sig');" && \
-            php -r "if (hash_file('SHA384', 'composer-setup.php') === trim(file_get_contents('composer-setup.sig'))) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
-            php composer-setup.php && \
-            php -r "unlink('composer-setup.php');"
-            mv composer.phar /usr/bin/composer
+        name: Install Composer
+        command: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+          php -r "copy('https://composer.github.io/installer.sig', 'composer-setup.sig');" && \
+          php -r "if (hash_file('SHA384', 'composer-setup.php') === trim(file_get_contents('composer-setup.sig'))) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
+          php composer-setup.php && \
+          php -r "unlink('composer-setup.php');"
+          mv composer.phar /usr/bin/composer
       - run:
-          name: Install Node.
-          command: |
-            curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
-            source $NVM_DIR/nvm.sh && \
-            nvm install $NODE_VERSION && \
-            nvm alias default $NODE_VERSION && \
-            nvm use default
+        name: Install Node.
+        command: |
+          curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+          source $NVM_DIR/nvm.sh && \
+          nvm install $NODE_VERSION && \
+          nvm alias default $NODE_VERSION && \
+          nvm use default
       - restore_cache:
-          keys:
+        keys:
             - npm-cache-{{ checksum "web/core/package.json" }}
             - composer-cache-{{ checksum "composer.lock" }}
       - run:
-          name: Install Dependencies
-          command: |
-            composer install --ignore-platform-reqs
-            cd web/core && npm install
+        name: Install Dependencies
+        command: |
+          composer install --ignore-platform-reqs
+          cd web/core && npm install 
       - save_cache:
-         key: npm-cache-{{ checksum "web/core/package.json" }}
-         paths:
+        key: npm-cache-{{ checksum "web/core/package.json" }}
+        paths:
            - web/core/node_modules
       - save_cache:
-         key: composer-cache-{{ checksum "composer.lock" }}
-         paths:
+        key: composer-cache-{{ checksum "composer.lock" }}
+        paths:
            - vendor
       - run:
-          name: Static Analysis
-          command: |
-            ./vendor/bin/phpmd web/modules/custom text unusedcode,design
-            ./vendor/bin/drupal-check web/modules/custom
-            ./vendor/bin/phpcs --standard=Drupal,DrupalPractice ./web/modules/custom
-            ./vendor/bin/phpstan analyse ./web/modules/custom
-            cd web/core
-            ./node_modules/.bin/eslint ./themes
-            ./node_modules/.bin/stylelint **/*.css
+        name: Static Analysis
+        command: |
+          ./vendor/bin/phpmd web/modules/custom text unusedcode,design
+          ./vendor/bin/drupal-check web/modules/custom
+          ./vendor/bin/phpcs --standard=Drupal,DrupalPractice ./web/modules/custom
+          ./vendor/bin/phpstan analyse ./web/modules/custom
+          cd web/core
+          ./node_modules/.bin/eslint ./themes
+          ./node_modules/.bin/stylelint **/*.css
 #      - store_artifacts:
 #          path: /tmp/lighthouse
 #          destination: lighthouse
