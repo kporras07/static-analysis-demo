@@ -8,7 +8,7 @@ jobs:
       NODE_VERSION: 14
     working_directory: /var/www/html
     steps:
-      - run: apt update -y
+      - run: apt update -y && apt install -y unzip
       - checkout
       - run:
           name: Install Composer
