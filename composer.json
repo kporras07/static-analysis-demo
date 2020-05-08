@@ -16,6 +16,7 @@
     ],
     "require": {
         "composer/installers": "^1.2",
+        "drupal/commerce": "^2.17",
         "drupal/core-composer-scaffold": "^8.8",
         "drupal/core-project-message": "^8.8",
         "drupal/core-recommended": "^8.8"
@@ -84,7 +85,7 @@
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
-        "drupal/coder": "^8.3",
+        "drupal/coder": "8.3.8",
         "mglaman/drupal-check": "^1.1",
         "mglaman/phpstan-drupal": "^0.12.3",
         "phpmd/phpmd": "^2.8",
