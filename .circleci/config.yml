@@ -30,7 +30,6 @@ jobs:
             nvm use default
       - restore_cache:
           keys:
-            #- npm-cache-{{ checksum "web/core/package.json" }}
             - composer-cache-{{ checksum "composer.lock" }}
       - run:
           name: Install Dependencies
@@ -38,10 +37,6 @@ jobs:
             composer install --ignore-platform-reqs
             nvm use default
             cd web/core && npm install 
-      - save_cache:
-          key: npm-cache-{{ checksum "web/core/package.json" }}
-          paths:
-             - web/core/node_modules
       - save_cache:
           key: composer-cache-{{ checksum "composer.lock" }}
           paths:
