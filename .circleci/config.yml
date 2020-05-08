@@ -42,7 +42,7 @@ jobs:
              - web/core/node_modules
       - save_cache:
           key: composer-cache-{{ checksum "composer.lock" }}
-           paths:
+          paths:
              - vendor
       - run:
           name: Static Analysis
